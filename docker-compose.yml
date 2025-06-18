@@ -1,0 +1,28 @@
+services:
+  n8n:
+    build:
+      context: .  # Refers to the directory where your Dockerfile is located
+      dockerfile: Dockerfile # Specifies the name of your Dockerfile
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      # Basic n8n environment variables (adjust as needed)
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=${N8N_PORT:-5678}
+      - N8N_PROTOCOL=${N8N_PROTOCOL:-http}
+      - NODE_ENV=${N8N_ENV:-production}
+      - WEBHOOK_URL=${N8N_WEBHOOK_URL}
+      - GENERIC_TIMEZONE=${N8N_GENERIC_TIMEZONE:-America/Sao_Paulo} # Example: Curitiba timezone
+      - N8N_BASIC_AUTH_ACTIVE=${N8N_BASIC_AUTH_ACTIVE:-true}
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      # Add other n8n specific environment variables
+    volumes:
+      - n8n_data:/home/node/.n8n # Persistent storage for n8n data
+      - ./local_files:/files # Mount a local directory for file sharing with n8n (useful for FFmpeg)
+
+volumes:
+  n8n_data:
+  
