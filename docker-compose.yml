@@ -19,6 +19,11 @@ services:
       - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
       - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
       # Add other n8n specific environment variables
+      - N8N_LOG_LEVEL=debug
+      - N8N_LOG_OUTPUT=console,file
+      - N8N_LOG_FILE_LOCATION=/var/log/n8n/n8n.log
+      - N8N_LOG_FORMAT=json # Or text
+      - CODE_ENABLE_STDOUT=true # Important for Code node console.log to go to server logs
     volumes:
       - n8n_data:/home/node/.n8n # Persistent storage for n8n data
       - ./local_files:/files # Mount a local directory for file sharing with n8n (useful for FFmpeg)
